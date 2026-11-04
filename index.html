@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ITDS Standup Order</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #0078D4;
+        }
+
+        select {
+            padding: 8px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            padding: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>IT Data Services Standup Order</h1>
+
+<select id="teamSelect"></select>
+
+<ol id="standupOrder"></ol>
+
+<script>
+
+const teams = {
+    "Analytics": [
+        "Nathan",
+        "Danika",
+        "Jaclyn",
+        "Aman",
+        "Wren",
+        "Bridget",
+        "Davus",
+        "Jason",
+        "Cole"
+    ],
+
+    "Another Team": [
+        "Person A",
+        "Person B",
+        "Person C"
+    ]
+};
+
+function seededRandom(seed) {
+    let x = Math.sin(seed++) * 10000;
+    return x - Math.floor(x);
+}
+
+function shuffleDaily(array, seed) {
+    let arr = [...array];
+
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(seededRandom(seed + i) * (i + 1));
+
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+
+    return arr;
+}
+
+function renderTeam(teamName) {
+
+    const people = teams[teamName];
+
+    const today = new Date();
+
+    const seed =
+        today.getFullYear() * 10000 +
+        (today.getMonth() + 1) * 100 +
+        today.getDate();
+
+    const shuffled = shuffleDaily(people, seed);
+
+    const list = document.getElementById("standupOrder");
+
+    list.innerHTML =
+        shuffled.map(person => `<li>${person}</li>`).join("");
+}
+
+const dropdown = document.getElementById("teamSelect");
+
+Object.keys(teams).forEach(team => {
+
+    const option = document.createElement("option");
+
+    option.value = team;
+    option.text = team;
+
+    dropdown.appendChild(option);
+});
+
+dropdown.addEventListener("change", e => {
+    renderTeam(e.target.value);
+});
+
+renderTeam(Object.keys(teams)[0]);
+
+</script>
+
+</body>
+</html>
