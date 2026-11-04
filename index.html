@@ -2,18 +2,20 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ITDS Standup Order</title>
+    <title>IT - Data & AI Standup Order</title>
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Segoe UI, Arial, sans-serif;
             max-width: 800px;
             margin: 40px auto;
             padding: 20px;
         }
 
         h1 {
-            color: #0078D4;
+            color: #D71920;
+            font-size: 2rem;
+            text-align: center;
         }
 
         select {
@@ -28,7 +30,7 @@
 </head>
 <body>
 
-<h1>IT Data Services Standup Order</h1>
+<h1 id="pageTitle"></h1>
 
 <select id="teamSelect"></select>
 
@@ -86,6 +88,12 @@ function renderTeam(teamName) {
     const people = teams[teamName];
 
     const today = new Date();
+
+    const formattedDate =
+        `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+
+    document.getElementById("pageTitle").textContent =
+        `IT - Data & AI Standup Order for ${formattedDate}`;
 
     const seed =
         today.getFullYear() * 10000 +
